@@ -9,7 +9,7 @@ const game = new Game({
     gameWidth: 1000,
     gameHeight: 562,
     uiEnabled: true,
-    debugEnabled: false,
+    debugEnabled: true,
     bgColor: "#967557",
 });
 

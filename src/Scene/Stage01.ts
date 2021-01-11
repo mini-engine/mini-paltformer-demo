@@ -1,4 +1,4 @@
-import { AssetManager, GameCamera, Scene, TimeManager } from "mini-engine";
+import { AssetManager, GameCamera, Scene, TimeManager, Vector2 } from "mini-engine";
 import { Foreground } from "../GameObject/Foreground";
 import { Player } from "../GameObject/Player";
 import { InputController } from "../GameObject/InputController";
@@ -26,9 +26,19 @@ export class Stage01 extends Scene {
         this.addGameObject(() => new Foreground(AssetManager.getImage("image/tileset/tileset.png")), "Foreground");
         this.addGameObject(() => new WoodenPlate(), "WoodenPlate");
         this.addGameObject(() => new Player(), "Player");
-        this.addGameObject(() => new Enemy01(), "Enemy01");
         this.addGameObject(() => new FpsMetter(), "FpsMetter");
         this.addGameObject(() => new Parallax(), "Parallax");
+
+        this.addGameObject(() => new Enemy01(new Vector2(-200, -48)), "Enemy00");
+        /*this.addGameObject(() => new Enemy01(new Vector2(300, -48)), "Enemy01");
+        this.addGameObject(() => new Enemy01(new Vector2(400, -48)), "Enemy02");
+        this.addGameObject(() => new Enemy01(new Vector2(-400, -48)), "Enemy03");
+        this.addGameObject(() => new Enemy01(new Vector2(-500, -48)), "Enemy04");
+        this.addGameObject(() => new Enemy01(new Vector2(-600, -48)), "Enemy05");
+        this.addGameObject(() => new Enemy01(new Vector2(600, -48)), "Enemy06");
+        this.addGameObject(() => new Enemy01(new Vector2(800, -48)), "Enemy07");
+        this.addGameObject(() => new Enemy01(new Vector2(364, -48)), "Enemy08");
+        this.addGameObject(() => new Enemy01(new Vector2(100, -48)), "Enemy09");*/
 
         this.gameCamera.layers = ["Foreground", "Enemy", "Player"];
         this.gameCamera.zoom = 0.01;

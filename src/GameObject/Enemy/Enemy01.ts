@@ -8,7 +8,6 @@ import {
     RigidBodyType,
     Sprite,
     SpriteRenderer,
-    TimeManager,
     Vector2,
 } from "mini-engine";
 import { Enemy01Walking } from "../../Animation/Enemy01Animations";
@@ -18,11 +17,15 @@ export class Enemy01 extends GameObject {
     private animator: Animator;
     private bodyCollider: BoxCollider;
     private edgeCollider: BoxCollider;
+    private wallCollider: BoxCollider;
     private rigidBody: RigidBody;
 
     private readonly walkSpeed: number = 1.6;
+    private readonly jumpSpeed: number = 14;
 
-    constructor() {
+    private jumping: boolean = false;
+
+    constructor(position: Vector2) {
         super();
 
         this.layer = "Enemy";
@@ -50,8 +53,12 @@ export class Enemy01 extends GameObject {
             "BodyCollider"
         );
         this.edgeCollider = this.addComponent(
-            () => new BoxCollider({ width: 4, height: 4, offsetX: 7, offsetY: -6, physics: false, debug: true }),
+            () => new BoxCollider({ width: 4, height: 4, offsetX: 8, offsetY: -6, physics: false, debug: true }),
             "EdgeCollider"
+        );
+        this.wallCollider = this.addComponent(
+            () => new BoxCollider({ width: 4, height: 4, offsetX: 8, offsetY: 5, physics: false, debug: true }),
+            "WallCollider"
         );
 
         this.rigidBody = this.addComponent(
@@ -59,14 +66,15 @@ export class Enemy01 extends GameObject {
                 new RigidBody({
                     rigidBodyType: RigidBodyType.Dynamic,
                     layersToCollide: ["Foreground", "Player"],
-                    gravity: 0,
+                    gravity: 5,
                 })
         );
+
+        this.transform.position = position;
     }
 
     protected start(): void {
         this.transform.scale.set(3, 3);
-        this.transform.position.set(200, -48);
         //this.transform.rotation = 45;
         this.animator.playAnimation("Walking");
     }
@@ -80,10 +88,25 @@ export class Enemy01 extends GameObject {
             return;
         }
 
-        if (this.edgeCollider.collidesWithLayer("Foreground") === false) {
+        let yVelocity: number = 0;
+
+        if (
+            this.edgeCollider.collidesWithLayer("Foreground") === false ||
+            this.wallCollider.collidesWithLayer("Foreground") === true ||
+            this.wallCollider.collidesWithLayer("Enemy") === true
+        ) {
             this.transform.scale.set(-this.transform.scale.x, this.transform.scale.y);
         }
 
-        this.rigidBody.velocity.set(this.transform.scale.unit().x * this.walkSpeed, 0);
+        if (this.wallCollider.collidesWithLayer("Player") && this.jumping === false) {
+            this.jumping = true;
+            yVelocity = this.jumpSpeed;
+        }
+
+        if (this.wallCollider.collidesWithLayer("Player") === false) {
+            this.jumping = false;
+        }
+
+        this.rigidBody.velocity.set(this.transform.scale.unit().x * this.walkSpeed, yVelocity);
     }
 }
