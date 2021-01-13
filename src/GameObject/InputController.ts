@@ -2,7 +2,7 @@ import { GameObject, GamepadController, InputManager, KeyboardController, Vector
 
 export class InputController extends GameObject {
     private keyboard: KeyboardController;
-    private gamepad: GamepadController;
+    private gamepad;
 
     private _axis: Vector2 = new Vector2(0, 0);
     private _jump: boolean = false;
@@ -11,7 +11,7 @@ export class InputController extends GameObject {
         super();
 
         this.keyboard = InputManager.keyboard;
-        this.gamepad = InputManager.gamepad;
+        this.gamepad = InputManager.gamepad.getGamepad(0);
     }
 
     public get axis(): Vector2 {
@@ -35,5 +35,21 @@ export class InputController extends GameObject {
         this._jump = this.keyboard.isPressed("Space");
     }
 
-    private updateGamepad(): void {}
+    private updateGamepad(): void {
+        this.axis.set(
+            this.gamepad.dpadRight ? 1 : this.gamepad.dpadLeft ? -1 : this.axis.x,
+            this.gamepad.dpadUp ? 1 : this.gamepad.dpadDown ? -1 : this.axis.y
+        );
+
+        this.axis.set(
+            this.gamepad.leftStickHorizontal > 0.1 || this.gamepad.leftStickHorizontal < -0.1
+                ? Math.sign(this.gamepad.leftStickHorizontal)
+                : this.axis.x,
+            this.gamepad.leftStickVertical > 0.1 || this.gamepad.leftStickVertical < -0.1
+                ? Math.sign(this.gamepad.leftStickVertical)
+                : this.axis.x
+        );
+
+        this._jump = this.gamepad.bottomFace || this._jump;
+    }
 }

@@ -30,7 +30,7 @@ export class Stage01 extends Scene {
         this.addGameObject(() => new Parallax(), "Parallax");
 
         this.addGameObject(() => new Enemy01(new Vector2(-200, -48)), "Enemy00");
-        /*this.addGameObject(() => new Enemy01(new Vector2(300, -48)), "Enemy01");
+        this.addGameObject(() => new Enemy01(new Vector2(300, -48)), "Enemy01");
         this.addGameObject(() => new Enemy01(new Vector2(400, -48)), "Enemy02");
         this.addGameObject(() => new Enemy01(new Vector2(-400, -48)), "Enemy03");
         this.addGameObject(() => new Enemy01(new Vector2(-500, -48)), "Enemy04");
@@ -38,7 +38,7 @@ export class Stage01 extends Scene {
         this.addGameObject(() => new Enemy01(new Vector2(600, -48)), "Enemy06");
         this.addGameObject(() => new Enemy01(new Vector2(800, -48)), "Enemy07");
         this.addGameObject(() => new Enemy01(new Vector2(364, -48)), "Enemy08");
-        this.addGameObject(() => new Enemy01(new Vector2(100, -48)), "Enemy09");*/
+        this.addGameObject(() => new Enemy01(new Vector2(100, -48)), "Enemy09");
 
         this.gameCamera.layers = ["Foreground", "Enemy", "Player"];
         this.gameCamera.zoom = 0.01;
