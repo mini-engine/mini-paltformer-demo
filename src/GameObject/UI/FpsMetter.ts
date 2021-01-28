@@ -10,21 +10,24 @@ export default class FpsMetter extends GameObject {
     constructor() {
         super();
 
+        this.layer = "UI";
         this.ui = true;
 
         this.textRenderer = this.addComponent(
             () =>
                 new TextRenderer({
-                    text: "",
+                    text: [""],
                     color: "#FFFFFF",
                     size: 12,
                     font: "PressStart2P-Regular",
+                    width: 128,
+                    height: 16,
                 })
         );
     }
 
     start() {
-        this.transform.position.set(DomManager.gameWidth / 2 - 140, 20 - DomManager.gameHeight / 2);
+        this.transform.position.set(DomManager.gameWidth / 2 - 120, 20 - DomManager.gameHeight / 2);
     }
 
     update() {
@@ -33,7 +36,7 @@ export default class FpsMetter extends GameObject {
             this.delay = 0;
 
             const fps: string = (1 / TimeManager.deltaTime).toFixed(2);
-            this.textRenderer.text = `FPS: ${fps}`;
+            this.textRenderer.text = [`FPS: ${fps}`];
         }
     }
 }

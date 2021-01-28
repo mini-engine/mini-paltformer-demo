@@ -20,12 +20,13 @@ export class Enemy01 extends GameObject {
     private wallCollider: BoxCollider;
     private rigidBody: RigidBody;
 
-    private readonly walkSpeed: number = 1.6;
+    private walkSpeed: number = 1.6;
     private readonly jumpSpeed: number = 14;
 
     private jumping: boolean = false;
+    private cacheVelocity = new Vector2();
 
-    constructor(position: Vector2) {
+    constructor(position: Vector2, walkSpeed: number = 1.6) {
         super();
 
         this.layer = "Enemy";
@@ -71,6 +72,7 @@ export class Enemy01 extends GameObject {
         );
 
         this.transform.position = position;
+        this.walkSpeed = walkSpeed;
     }
 
     protected start(): void {
@@ -92,8 +94,7 @@ export class Enemy01 extends GameObject {
 
         if (
             this.edgeCollider.collidesWithLayer("Foreground") === false ||
-            this.wallCollider.collidesWithLayer("Foreground") === true ||
-            this.wallCollider.collidesWithLayer("Enemy") === true
+            this.wallCollider.collidesWithLayer("Foreground") === true
         ) {
             this.transform.scale.set(-this.transform.scale.x, this.transform.scale.y);
         }
@@ -107,6 +108,6 @@ export class Enemy01 extends GameObject {
             this.jumping = false;
         }
 
-        this.rigidBody.velocity.set(this.transform.scale.unit().x * this.walkSpeed, yVelocity);
+        this.rigidBody.velocity.set(Math.sign(this.transform.scale.x) * this.walkSpeed, yVelocity);
     }
 }

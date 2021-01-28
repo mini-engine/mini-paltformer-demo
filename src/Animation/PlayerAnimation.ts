@@ -7,24 +7,13 @@ export const PlayerIdle = (): Animation => {
     };
 
     return new Animation({
-        sprites: [
-            new Sprite({
-                ...config,
-                slice: new Rectangle(0, 64, 16, 16),
-            }),
-            new Sprite({
-                ...config,
-                slice: new Rectangle(16, 64, 16, 16),
-            }),
-            new Sprite({
-                ...config,
-                slice: new Rectangle(32, 64, 16, 16),
-            }),
-            new Sprite({
-                ...config,
-                slice: new Rectangle(48, 64, 16, 16),
-            }),
-        ],
+        sprites: [0, 16, 32, 48].map(
+            (x: number) =>
+                new Sprite({
+                    ...config,
+                    slice: new Rectangle(x, 64, 16, 16),
+                })
+        ),
         speed: 0.4,
         loop: true,
     });
