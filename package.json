@@ -2,7 +2,7 @@
     "name": "mini-platformer-demo",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
+    "main": "electron-main.js",
     "module": "dist/index.es.js",
     "files": [
         "dist"
@@ -15,9 +15,12 @@
         "lint": "eslint . --ext .ts",
         "lint-and-fix": "eslint . --ext .ts --fix",
         "prettier": "prettier --write 'src/**/*.{ts,js,css,html}'",
-        "prettier-check": "prettier --check 'src/**/*.{ts,js,css,html}'"
+        "prettier-check": "prettier --check 'src/**/*.{ts,js,css,html}'",
+        "start-electron": "electron .",
+        "pack-electron-win": "electron-builder --win --config",
+        "pack-electron-linux": "electron-builder --linux --config"
     },
-    "author": "",
+    "author": "Mauro Cristy <maurocristy@gmail.com> (https://github.com/maurocristy87)",
     "license": "ISC",
     "devDependencies": {
         "@babel/cli": "^7.10.5",
@@ -25,17 +28,19 @@
         "@babel/plugin-proposal-class-properties": "^7.10.4",
         "@babel/preset-env": "^7.11.0",
         "@babel/preset-typescript": "^7.10.4",
-        "babel-loader": "^8.1.0",
-        "webpack": "^4.44.1",
-        "webpack-cli": "^3.3.12",
-        "webpack-dev-server": "^3.11.0",
-        "core-js": "^3.6.5",
-        "tslib": "^2.0.3",
-        "typescript": "^4.0.2",
         "@typescript-eslint/eslint-plugin": "^4.2.0",
         "@typescript-eslint/parser": "^4.2.0",
+        "babel-loader": "^8.1.0",
+        "core-js": "^3.6.5",
+        "electron": "^11.2.1",
+        "electron-builder": "^22.9.1",
         "eslint": "^7.9.0",
-        "prettier": "^2.1.2"
+        "prettier": "^2.1.2",
+        "tslib": "^2.0.3",
+        "typescript": "^4.0.2",
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.3.12",
+        "webpack-dev-server": "^3.11.0"
     },
     "dependencies": {
         "mini-engine": "file:../mini-engine/mini-engine-1.0.0.tgz"

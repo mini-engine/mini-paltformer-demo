@@ -1,14 +1,14 @@
 import { Game } from "mini-engine";
 import { Stage01 } from "./Scene/Stage01";
 
-const containerElement = document.getElementById("app");
+const containerElement = document.querySelector("body");
 
 const config = {
     containerNode: containerElement,
     gameWidth: 1000,
     gameHeight: 562,
-    uiEnabled: true,
-    debugEnabled: false,
+    debugEnabled: true,
+    context2d: "fallback",
     bgColor: "#967557",
 };
 

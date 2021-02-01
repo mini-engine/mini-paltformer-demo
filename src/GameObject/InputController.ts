@@ -1,8 +1,8 @@
-import { GameObject, GamepadController, InputManager, KeyboardController, Vector2 } from "mini-engine";
+import { GameObject, GamepadController, GamepadData, InputManager, KeyboardController, Vector2 } from "mini-engine";
 
 export class InputController extends GameObject {
     private keyboard: KeyboardController;
-    private gamepad;
+    private gamepad: GamepadData = null;
 
     private _axis: Vector2 = new Vector2(0, 0);
     private _jump: boolean = false;
@@ -24,7 +24,8 @@ export class InputController extends GameObject {
 
     protected update(): void {
         this.updateKeyboard();
-        this.updateGamepad();
+
+        if (this.gamepad) this.updateGamepad();
     }
 
     private updateKeyboard(): void {

@@ -19,6 +19,7 @@ export class Player extends GameObject {
     private bodyCollider: BoxCollider;
     private feetCollider: BoxCollider;
     private rigidBody: RigidBody;
+    private grounded: boolean = false;
 
     constructor() {
         super();
@@ -41,7 +42,9 @@ export class Player extends GameObject {
                 new Animator({
                     spriteRenderer: this.spriteRenderer,
                 })
-        ).addAnimation("PlayerIdle", Animations.PlayerIdle());
+        )
+            .addAnimation("PlayerIdle", Animations.PlayerIdle())
+            .addAnimation("PlayerRun", Animations.PlayerRun());
 
         this.bodyCollider = this.addComponent(
             () => new BoxCollider({ width: 8, height: 16, debug: true }),
@@ -69,5 +72,24 @@ export class Player extends GameObject {
         this.transform.position.set(180, 92);
         //this.transform.rotation = 45;
         this.animator.playAnimation("PlayerIdle");
+    }
+
+    protected update(): void {
+        this.grounded = this.feetCollider.collidesWithLayer("Foreground");
+
+        this.transform.scale.x =
+            this.rigidBody.velocity.x !== 0
+                ? Math.sign(this.rigidBody.velocity.x) * Math.abs(this.transform.scale.x)
+                : this.transform.scale.x;
+
+        this.updateAnimations();
+    }
+
+    private updateAnimations(): void {
+        if (this.rigidBody.velocity.x !== 0 && this.grounded) {
+            this.animator.playAnimation("PlayerRun");
+        } else {
+            this.animator.playAnimation("PlayerIdle");
+        }
     }
 }

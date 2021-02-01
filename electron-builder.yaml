@@ -1,0 +1,10 @@
+directories:
+    output: electron-build
+    buildResources: build
+appId: mini-platformer
+linux:
+    target:
+        - target: appimage
+          arch:
+              - armv7l
+electronVersion: 11.2.1
