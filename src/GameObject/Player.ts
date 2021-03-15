@@ -8,10 +8,10 @@ import {
     RigidBodyType,
     Sprite,
     SpriteRenderer,
-    Vector2,
 } from "mini-engine";
 import * as Animations from "../Animation/PlayerAnimation";
 import { Movements } from "../Component/Player/Movements";
+import { Stage01 } from "../Scene/Stage01";
 
 export class Player extends GameObject {
     private spriteRenderer: SpriteRenderer;
@@ -19,6 +19,7 @@ export class Player extends GameObject {
     private bodyCollider: BoxCollider;
     private feetCollider: BoxCollider;
     private rigidBody: RigidBody;
+    private grounded: boolean = false;
 
     constructor() {
         super();
@@ -41,7 +42,9 @@ export class Player extends GameObject {
                 new Animator({
                     spriteRenderer: this.spriteRenderer,
                 })
-        ).addAnimation("PlayerIdle", Animations.PlayerIdle());
+        )
+            .addAnimation("PlayerIdle", Animations.PlayerIdle())
+            .addAnimation("PlayerRun", Animations.PlayerRun());
 
         this.bodyCollider = this.addComponent(
             () => new BoxCollider({ width: 8, height: 16, debug: true }),
@@ -66,8 +69,29 @@ export class Player extends GameObject {
 
     protected start(): void {
         this.transform.scale.set(3, 3);
-        this.transform.position.set(180, 92);
+        this.transform.position.set(0, -48);
         //this.transform.rotation = 45;
         this.animator.playAnimation("PlayerIdle");
+    }
+
+    protected update(): void {
+        this.spriteRenderer.setActive(this.getCurrentScene<Stage01>().paused === false);
+
+        this.grounded = this.feetCollider.collidesWithLayer("Foreground");
+
+        this.transform.scale.x =
+            this.rigidBody.velocity.x !== 0
+                ? Math.sign(this.rigidBody.velocity.x) * Math.abs(this.transform.scale.x)
+                : this.transform.scale.x;
+
+        this.updateAnimations();
+    }
+
+    private updateAnimations(): void {
+        if (this.rigidBody.velocity.x !== 0 && this.grounded) {
+            this.animator.playAnimation("PlayerRun");
+        } else {
+            this.animator.playAnimation("PlayerIdle");
+        }
     }
 }

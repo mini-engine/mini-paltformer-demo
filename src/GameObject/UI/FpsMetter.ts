@@ -16,12 +16,12 @@ export default class FpsMetter extends GameObject {
         this.textRenderer = this.addComponent(
             () =>
                 new TextRenderer({
-                    text: [""],
-                    color: "#FFFFFF",
-                    size: 12,
-                    font: "PressStart2P-Regular",
-                    width: 128,
-                    height: 16,
+                    text: "",
+                    color: "#A7D6ED",
+                    size: 20,
+                    fontFamily: "PressStart2P-Regular",
+                    fontUrl: "font/PressStart2P-Regular.ttf",
+                    pivot: "center",
                 })
         );
     }
@@ -31,12 +31,12 @@ export default class FpsMetter extends GameObject {
     }
 
     update() {
-        this.delay += TimeManager.deltaTime;
+        this.delay += TimeManager.unscaledDeltaTime;
         if (this.delay >= FPS_REFRESH_DELAY) {
             this.delay = 0;
 
-            const fps: string = (1 / TimeManager.deltaTime).toFixed(2);
-            this.textRenderer.text = [`FPS: ${fps}`];
+            const fps: string = (1 / TimeManager.unscaledDeltaTime).toFixed(2);
+            this.textRenderer.text = `FPS: ${fps}`;
         }
     }
 }
