@@ -1,4 +1,5 @@
 import { GameObject, GamepadController, GamepadData, InputManager, KeyboardController, Vector2 } from "mini-engine";
+import { Stage01 } from "../Scene/Stage01";
 
 export class InputController extends GameObject {
     private keyboard: KeyboardController;
@@ -23,6 +24,10 @@ export class InputController extends GameObject {
     }
 
     protected update(): void {
+        if (this.getCurrentScene<Stage01>().paused) {
+            return;
+        }
+
         this.updateKeyboard();
 
         if (this.gamepad) this.updateGamepad();

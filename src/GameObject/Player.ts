@@ -8,10 +8,10 @@ import {
     RigidBodyType,
     Sprite,
     SpriteRenderer,
-    Vector2,
 } from "mini-engine";
 import * as Animations from "../Animation/PlayerAnimation";
 import { Movements } from "../Component/Player/Movements";
+import { Stage01 } from "../Scene/Stage01";
 
 export class Player extends GameObject {
     private spriteRenderer: SpriteRenderer;
@@ -69,12 +69,14 @@ export class Player extends GameObject {
 
     protected start(): void {
         this.transform.scale.set(3, 3);
-        this.transform.position.set(180, 92);
+        this.transform.position.set(0, -48);
         //this.transform.rotation = 45;
         this.animator.playAnimation("PlayerIdle");
     }
 
     protected update(): void {
+        this.spriteRenderer.setActive(this.getCurrentScene<Stage01>().paused === false);
+
         this.grounded = this.feetCollider.collidesWithLayer("Foreground");
 
         this.transform.scale.x =

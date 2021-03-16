@@ -5,11 +5,13 @@ const containerElement = document.querySelector("body");
 
 const config = {
     containerNode: containerElement,
-    gameWidth: 1000,
-    gameHeight: 562,
-    debugEnabled: true,
+    gameWidth: 1280,
+    gameHeight: 720,
+    debugEnabled: false,
     context2d: "fallback",
     bgColor: "#967557",
+    pyysicsFramerate: 60,
+    physicsIterations: 8,
 };
 
 // Create the Game

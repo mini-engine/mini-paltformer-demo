@@ -4,17 +4,30 @@
 <head>
   <title>Mini Engine - Demo</title>
   <style>
-    @font-face {
-      font-family: "PressStart2P-Regular";
-      font-style: normal;
-      font-weight: normal;
-      src: url('font/PressStart2P-Regular.ttf');
-    }
-
     * {
       margin: 0;
       padding: 0;
+    }
+
+    body {
+      background-color: black;
       overflow: hidden;
+    }
+
+    #app {
+      margin-left: auto;
+      margin-right: auto;
+      width: 80%;
+      height: 80%;
+    }
+
+    @media all and (display-mode: fullscreen) {
+      #app {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100vw;
+        height: 100vh;
+      }
     }
 
     canvas {
